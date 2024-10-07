@@ -49,7 +49,7 @@ class Trainer:
         torch.backends.cudnn.enabled = self.enable_cudnn
         # log.info(OmegaConf.to_yaml(self._cfg))
         log.info("Instantiating a Trainer from config")
-        log.info("Trainer will run on device %s", self._cfg.training.cuda)
+        log.info("Trainer will run on device %s", self._cfg.training.training.cuda)
         if not self.has_training:
             resume = False
             self._cfg.training = self._cfg
