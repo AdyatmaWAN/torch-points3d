@@ -85,7 +85,7 @@ class Trainer:
         if not self._checkpoint.is_empty:
             self._dataset: BaseDataset = instantiate_dataset(self._checkpoint.data_config)
             self._model: BaseModel = self._checkpoint.create_model(
-                self._dataset, weight_name=self._cfg.training..weight_name
+                self._dataset, weight_name=self._cfg.training.weight_name
             )
         else:
             self._dataset: BaseDataset = instantiate_dataset(self._cfg.data)
