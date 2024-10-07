@@ -1,4 +1,3 @@
-:
 # Siamese KPConv Cls
 # KPConv: Flexible and Deformable Convolution for Point Clouds (https://arxiv.org/abs/1904.08889)
 # KPConv support format_type="[PARTIAL_DENSE | MESSAGE_PASSING]"
