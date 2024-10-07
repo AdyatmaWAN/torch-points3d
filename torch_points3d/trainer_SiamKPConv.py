@@ -49,12 +49,11 @@ class Trainer:
         torch.backends.cudnn.enabled = self.enable_cudnn
         # log.info(OmegaConf.to_yaml(self._cfg))
         log.info("Instantiating a Trainer from config")
-        log.info("Trainer will run on device %s", self._cfg.training.training.cuda)
         if not self.has_training:
             resume = False
             self._cfg.training = self._cfg
         else:
-            resume = bool(self._cfg.training.checkpoint_dir)
+            resume = bool(self._cfg.training.training.checkpoint_dir)
 
         # Get device
         if self._cfg.training.cuda > -1 and torch.cuda.is_available():
@@ -317,7 +316,11 @@ class Trainer:
 
     @property
     def has_training(self):
-        return getattr(self._cfg, "training", None)
+        if self._cfg.training.checkpoint_dir is "":
+            return False
+        else:
+            return True
+        # return getattr(self._cfg, "training", None)
 
     @property
     def precompute_multi_scale(self):
