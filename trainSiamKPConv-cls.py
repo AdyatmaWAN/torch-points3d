@@ -9,7 +9,7 @@ from torch_points3d.trainer_SiamKPConv import Trainer
 def main(cfg):
     OmegaConf.set_struct(cfg, False)  # This allows getattr and hasattr methods to function correctly
     if cfg.pretty_print:
-        print(cfg.pretty())
+        print(OmegaConf.to_yaml(cfg))
     trainer = Trainer(cfg)
     trainer.train()
     # trainer.eval()
