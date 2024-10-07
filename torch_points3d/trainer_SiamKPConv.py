@@ -51,10 +51,8 @@ class Trainer:
         log.info("Instantiating a Trainer from config")
         if not self.has_training:
             resume = False
-            self._cfg.training = self._cfg
         else:
             resume = True
-        log.info(self._cfg.training)
         # Get device
         if self._cfg.training.training.cuda > -1 and torch.cuda.is_available():
             device = "cuda"
