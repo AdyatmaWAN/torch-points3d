@@ -73,7 +73,7 @@ oauthlib==3.2.2; python_version >= "3.6" and python_full_version < "3.0.0" or py
 omegaconf==2.3.0; python_version >= "3.6"
 open3d==0.18.0
 packaging==24.1; python_version >= "3.7"
-pandas==2.2.3; python_full_version >= "3.6.1" and python_version >= "3.6"
+pandas==2.2.1; python_full_version >= "3.6.1" and python_version >= "3.6"
 pandocfilters==1.5.1; python_version >= "3.7" and python_full_version < "3.0.0" or python_full_version >= "3.4.0" and python_version >= "3.7"
 parso==0.8.4; python_version >= "3.7"
 pexpect==4.9.0; sys_platform != "win32" and python_version >= "3.7"
@@ -83,7 +83,7 @@ plyfile==1.1
 prometheus-client==0.21.0; python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.4.0" and python_version >= "3.6"
 promise==2.3; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.4.0"
 prompt-toolkit==3.0.48; python_full_version >= "3.6.2" and python_version >= "3.7"
-protobuf==5.28.2; python_version >= "3.6"
+protobuf==4.25.5; python_version >= "3.6"
 psutil==6.0.0; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.4.0"
 ptyprocess==0.7.0; os_name != "nt" and python_version >= "3.7" and sys_platform != "win32"
 py==1.11.0; implementation_name == "pypy" and python_version >= "3.7" and python_full_version >= "3.6.1"
