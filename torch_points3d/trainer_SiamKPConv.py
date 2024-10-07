@@ -314,7 +314,7 @@ class Trainer:
 
     @property
     def has_training(self):
-        if self._cfg.training..checkpoint_dir == "":
+        if self._cfg.training.checkpoint_dir == "":
             return False
         else:
             return True
