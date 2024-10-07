@@ -1,27 +1,26 @@
-data:
-  class: Urb3DCD_cls.Urb3DCDDataset_cls
-  dataset_name: "Urb3DCD_cls"
-  task: change_detection
-  dataTrainFile:  "../Las/Urb3DCD_cls/Train"
-  dataValFile:  "../Las/Urb3DCD_cls/Val"
-  dataTestFile:  "../Las/Urb3DCD_cls/Test"
-  dataroot: data
-  preprocessed_dir: data/${data.dataset_name}/
-  nameInPly: "params" # IEEE V1 : "Urb3DSimul" / IEEE V2:"Params"
-  first_subsampling: 0.3 #0.05 # Grid size of the input data
-  use_category: False # Use object category information
-  radius: 15
-  sample_per_epoch: 1000
-  DA: True # Make data augmentation for train ds
-  TTA: False
+class: Urb3DCD_cls.Urb3DCDDataset_cls
+dataset_name: "Urb3DCD_cls"
+task: change_detection
+dataTrainFile:  "../Las/Urb3DCD_cls/Train"
+dataValFile:  "../Las/Urb3DCD_cls/Val"
+dataTestFile:  "../Las/Urb3DCD_cls/Test"
+dataroot: data
+preprocessed_dir: data/${data.dataset_name}/
+nameInPly: "params" # IEEE V1 : "Urb3DSimul" / IEEE V2:"Params"
+first_subsampling: 0.3 #0.05 # Grid size of the input data
+use_category: False # Use object category information
+radius: 15
+sample_per_epoch: 1000
+DA: True # Make data augmentation for train ds
+TTA: False
 #  fixed_points: 1024
-  pre_transforms: # Offline transforms, done only once
-    - transform: GridSampling3D
-      params:
-        size: ${data.first_subsampling}
+pre_transforms: # Offline transforms, done only once
+  - transform: GridSampling3D
+    params:
+      size: ${data.first_subsampling}
 
-  random_subsampleTrainset: True # Wether to randomly subsampled train set like in SiamGCN
+random_subsampleTrainset: True # Wether to randomly subsampled train set like in SiamGCN
 
-  load_preprocessed: False # Wether to load or not pre_transform point clouds, if not original files will be computed again
-  load_trees: False # Wether to load or not kd trees if possible
+load_preprocessed: False # Wether to load or not pre_transform point clouds, if not original files will be computed again
+load_trees: False # Wether to load or not kd trees if possible
 
