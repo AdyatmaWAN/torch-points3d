@@ -54,9 +54,9 @@ class Trainer:
         else:
             resume = True
         # Get device
-        if self._cfg.training.training.cuda > -1 and torch.cuda.is_available():
+        if self._cfg.training.cuda > -1 and torch.cuda.is_available():
             device = "cuda"
-            torch.cuda.set_device(self._cfg.training.training.cuda)
+            torch.cuda.set_device(self._cfg.training.cuda)
         else:
             device = "cpu"
         self._device = torch.device(device)
@@ -65,18 +65,18 @@ class Trainer:
         # Profiling
         if self.profiling:
             # Set the num_workers as torch.utils.bottleneck doesn't work well with it
-            self._cfg.training.training.num_workers = 0
+            self._cfg.training.num_workers = 0
 
         # Start Wandb if public
         if self.wandb_log:
-            Wandb.launch(self._cfg, self._cfg.training.wandb.public and self.wandb_log)
+            Wandb.launch(self._cfg, self._cfg.wandb.public and self.wandb_log)
 
         # Checkpoint
 
         self._checkpoint: ModelCheckpoint = ModelCheckpoint(
-            self._cfg.training.training.checkpoint_dir,
+            self._cfg.training.checkpoint_dir,
             self._cfg.model_name,
-            self._cfg.training.training.weight_name,
+            self._cfg.training.weight_name,
             run_config=self._cfg,
             resume=resume,
         )
@@ -85,7 +85,7 @@ class Trainer:
         if not self._checkpoint.is_empty:
             self._dataset: BaseDataset = instantiate_dataset(self._checkpoint.data_config)
             self._model: BaseModel = self._checkpoint.create_model(
-                self._dataset, weight_name=self._cfg.training.weight_name
+                self._dataset, weight_name=self._cfg.training..weight_name
             )
         else:
             self._dataset: BaseDataset = instantiate_dataset(self._cfg.data)
@@ -314,7 +314,7 @@ class Trainer:
 
     @property
     def has_training(self):
-        if self._cfg.training.training.checkpoint_dir == "":
+        if self._cfg.training..checkpoint_dir == "":
             return False
         else:
             return True
