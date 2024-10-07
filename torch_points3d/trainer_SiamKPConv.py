@@ -6,6 +6,7 @@ import torch
 import time
 import logging
 import numpy as np
+from omegaconf import OmegaConf
 
 
 # Import building function for model and dataset
@@ -46,7 +47,7 @@ class Trainer:
     def _initialize_trainer(self):
         # Enable CUDNN BACKEND
         torch.backends.cudnn.enabled = self.enable_cudnn
-        log.info(self._cfg.pretty())
+        log.info(OmegaConf.to_yaml(self._cfg))
         if not self.has_training:
             resume = False
             self._cfg.training = self._cfg
