@@ -65,18 +65,18 @@ class Trainer:
         # Profiling
         if self.profiling:
             # Set the num_workers as torch.utils.bottleneck doesn't work well with it
-            self._cfg.training.num_workers = 0
+            self._cfg.training.training.num_workers = 0
 
         # Start Wandb if public
         if self.wandb_log:
-            Wandb.launch(self._cfg, self._cfg.wandb.public and self.wandb_log)
+            Wandb.launch(self._cfg, self._cfg.training.wandb.public and self.wandb_log)
 
         # Checkpoint
 
         self._checkpoint: ModelCheckpoint = ModelCheckpoint(
-            self._cfg.training.checkpoint_dir,
+            self._cfg.training.training.checkpoint_dir,
             self._cfg.model_name,
-            self._cfg.training.weight_name,
+            self._cfg.training.training.weight_name,
             run_config=self._cfg,
             resume=resume,
         )
