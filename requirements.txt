@@ -124,11 +124,11 @@ terminado==0.18.1; python_version >= "3.6"
 testpath==0.6.0; python_version >= "3.7"
 threadpoolctl==3.5.0; python_version >= "3.7"
 torch==2.4.0; python_full_version >= "3.6.2"
-torch-cluster==1.6.3; python_version >= "3.6"
-torch-geometric==2.6.1; python_version >= "3.6"
-torch-points-kernels==0.7.0
-torch-scatter==2.1.2; python_version >= "3.6"
-torch-sparse==0.6.18; python_version >= "3.6"
+#torch-cluster==1.6.3; python_version >= "3.6"
+#torch-geometric==2.6.1; python_version >= "3.6"
+#torch-points-kernels==0.7.0
+#torch-scatter==2.1.2; python_version >= "3.6"
+#torch-sparse==0.6.18; python_version >= "3.6"
 torchfile==0.1.0
 torchnet==0.0.4
 torchvision==0.19.1; python_version >= "3.0"
