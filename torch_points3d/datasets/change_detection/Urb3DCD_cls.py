@@ -233,7 +233,6 @@ class Urb3DCD_cls_cylinder(Dataset):
         uni_counts = np.sqrt(uni_counts.mean() / uni_counts)
         self._label_counts = uni_counts / np.sum(uni_counts)
         print(self._label_counts)
-        print(self._label_counts)
         self._labels = uni
         # self.weight_classes = torch.from_numpy(self._label_counts).type(torch.float)
         self.weight_classes = None
