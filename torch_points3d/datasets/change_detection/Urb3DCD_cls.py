@@ -253,6 +253,7 @@ class Urb3DCD_cls_cylinder(Dataset):
         self.filesPC0 = []
         self.filesPC1 = []
         self.labels = []
+        print(os.getcwd())
         globPath = os.scandir(self.filePaths)
         for dir in globPath:
             if dir.is_dir():
