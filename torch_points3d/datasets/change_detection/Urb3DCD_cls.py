@@ -223,6 +223,7 @@ class Urb3DCD_cls_cylinder(Dataset):
         self.DA = DA
         self.TTA = TTA
         self.pre_transform = pre_transform
+        print(self.num_classes)
         self.num_classes = URB3DCD_CLS_NUM_CLASSES
         self.nb_elt_class = torch.zeros(self.num_classes)
         self.sample_per_epoch = sample_per_epoch
@@ -238,9 +239,9 @@ class Urb3DCD_cls_cylinder(Dataset):
         self.fixed_nb_pts = fixed_nb_pts
         self.sample_pts = SamplePoints(self.fixed_nb_pts)
 
-    @property
-    def num_classes(self):
-        return self._num_classes  # Provide a getter for the number of classes
+    # @property
+    # def num_classes(self):
+    #     return self._num_classes  # Provide a getter for the number of classes
 
     def size(self):
         return self.__len__()
