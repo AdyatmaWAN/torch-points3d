@@ -1,9 +1,9 @@
 class: Urb3DCD_cls.Urb3DCDDataset_cls
 dataset_name: "Urb3DCD_cls"
 task: change_detection
-dataTrainFile:  "../Las/Urb3DCD_cls/Train"
-dataValFile:  "../Las/Urb3DCD_cls/Val"
-dataTestFile:  "../Las/Urb3DCD_cls/Test"
+dataTrainFile:  "../Las/Urb3DCD_cls/Train/"
+dataValFile:  "../Las/Urb3DCD_cls/Val/"
+dataTestFile:  "../Las/Urb3DCD_cls/Test/"
 dataroot: data
 preprocessed_dir: data/${data.dataset_name}/
 nameInPly: "params" # IEEE V1 : "Urb3DSimul" / IEEE V2:"Params"
