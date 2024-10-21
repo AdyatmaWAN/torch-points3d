@@ -29,3 +29,4 @@ tau_1: 0.1
 tau_2: 0.05
 rot_thresh: 4
 trans_thresh: 0.15
+fixed_points: None
