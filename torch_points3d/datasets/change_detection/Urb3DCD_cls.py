@@ -238,6 +238,9 @@ class Urb3DCD_cls_cylinder(Dataset):
         self.fixed_nb_pts = fixed_nb_pts
         self.sample_pts = SamplePoints(self.fixed_nb_pts)
 
+    @property
+    def num_classes(self):
+        return self._num_classes  # Provide a getter for the number of classes
 
     def size(self):
         return self.__len__()
