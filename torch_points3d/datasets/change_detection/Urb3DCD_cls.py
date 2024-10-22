@@ -321,7 +321,7 @@ class Urb3DCDDataset_cls(BaseSiameseDataset):
         self.DA = self.dataset_opt.DA
         self.preprocessed_dir = self.dataset_opt.preprocessed_dir
 
-        print(self.dataset_opt.fixed_points is "None")
+        print(self.dataset_opt.fixed_points == "None")
 
         if self.dataset_opt.fixed_points is "None":
             self.dataset_opt.fixed_points = None
