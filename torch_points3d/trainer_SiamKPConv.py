@@ -88,7 +88,6 @@ class Trainer:
                 self._dataset, weight_name=self._cfg.training.weight_name
             )
         else:
-            log.info(self._cfg.data)
             self._dataset: BaseDataset = instantiate_dataset(self._cfg.data)
             self._model: BaseModel = instantiate_model(copy.deepcopy(self._cfg), self._dataset)
             self._model.instantiate_optimizers(self._cfg, "cuda" in device)

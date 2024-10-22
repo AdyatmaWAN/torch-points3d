@@ -31,7 +31,7 @@ class Pair(Data):
             pred1 = None,
             **kwargs,
     ):
-        self.__data_class__ = Data
+        # self.__data_class__ = Data
         self.KDTREE_KEY_PC0 = KDTREE_KEY_PC0
         self.KDTREE_KEY_PC1 = KDTREE_KEY_PC1
         super(Pair, self).__init__(x=x, pos=pos, rgb=rgb,
