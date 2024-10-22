@@ -236,7 +236,7 @@ class Urb3DCD_cls_cylinder(Dataset):
         self._labels = uni
         # self.weight_classes = torch.from_numpy(self._label_counts).type(torch.float)
         self.weight_classes = None
-        self.fixed_nb_pts = fixed_nb_pts
+        self.fixed_nb_pts = int(fixed_nb_pts)
         self.sample_pts = SamplePoints(self.fixed_nb_pts)
 
     @property
