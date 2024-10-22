@@ -321,11 +321,8 @@ class Urb3DCDDataset_cls(BaseSiameseDataset):
         self.DA = self.dataset_opt.DA
         self.preprocessed_dir = self.dataset_opt.preprocessed_dir
 
-        print(type(self.dataset_opt.fixed_points))
-        print(self.dataset_opt.fixed_points)
-        print(type(None))
-        print(None)
-        print(self.dataset_opt.fixed_points is None)
+        if self.dataset_opt.fixed_points is "None":
+            self.dataset_opt.fixed_points = None
 
         self.train_dataset = Urb3DCD_cls_cylinder(
             filePaths=self.dataset_opt.dataTrainFile,
