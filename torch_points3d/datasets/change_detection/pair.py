@@ -113,6 +113,7 @@ class Pair(Data):
         """
         # Random rotation around the Z axis
         angle = (np.random.random() - 0.5) * angle
+        angle = torch.tensor(angle, dtype=torch.float32)
         M = torch.tensor([[torch.cos(angle), -torch.sin(angle)], [torch.sin(angle), torch.cos(angle)]], dtype=torch.float32)
 
         # Rotate both source and target point clouds
