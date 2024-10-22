@@ -236,9 +236,7 @@ class Urb3DCD_cls_cylinder(Dataset):
         self._labels = uni
         # self.weight_classes = torch.from_numpy(self._label_counts).type(torch.float)
         self.weight_classes = None
-        print(fixed_nb_pts)
         self.fixed_nb_pts = fixed_nb_pts
-        print(self.fixed_nb_pts)
         self.sample_pts = SamplePoints(self.fixed_nb_pts)
 
     @property
@@ -322,6 +320,12 @@ class Urb3DCDDataset_cls(BaseSiameseDataset):
         self.sample_per_epoch = int(self.dataset_opt.sample_per_epoch)
         self.DA = self.dataset_opt.DA
         self.preprocessed_dir = self.dataset_opt.preprocessed_dir
+
+        print(type(self.dataset_opt.fixed_points))
+        print(self.dataset_opt.fixed_points)
+        print(type(None))
+        print(None)
+        print(self.dataset_opt.fixed_points is None)
 
         self.train_dataset = Urb3DCD_cls_cylinder(
             filePaths=self.dataset_opt.dataTrainFile,
