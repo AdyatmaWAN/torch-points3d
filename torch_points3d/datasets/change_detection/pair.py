@@ -15,7 +15,6 @@ KDTREE_KEY_PC1 = None
 
 
 class Pair(Data):
-
     def __init__(
             self,
             x=None,
@@ -28,34 +27,46 @@ class Pair(Data):
             y1=None,
             y0=None,
             gt_change=None,
-            pred1 = None,
+            pred1=None,
             **kwargs,
     ):
-        # self.__data_class__ = Data
-        self.KDTREE_KEY_PC0 = KDTREE_KEY_PC0
-        self.KDTREE_KEY_PC1 = KDTREE_KEY_PC1
-        super(Pair, self).__init__(x=x, pos=pos, rgb=rgb,
-                                   x_target=x_target, pos_target=pos_target, rgb_target=rgb_target,
-                                   y=y, y0=y0, y1=y1, gt_change= gt_change, pred1=pred1,**kwargs)
+        # Initialize the superclass (Data)
+        super(Pair, self).__init__(
+            x=x, pos=pos, rgb=rgb,
+            x_target=x_target, pos_target=pos_target, rgb_target=rgb_target,
+            y=y, y0=y0, y1=y1, gt_change=gt_change, pred1=pred1, **kwargs
+        )
 
     @classmethod
     def make_pair(cls, data_source, data_target):
         """
-        add in a Data object the source elem, the target elem.
+        Add in a Data object the source elem and the target elem.
         """
-        # add concatenation of the point cloud
+        # Initialize a new Pair object
         batch = cls()
+
+        # Add all source attributes to the new object
         for key in data_source.keys:
             batch[key] = data_source[key]
+
+        # Add target attributes with the '_target' suffix
         for key_target in data_target.keys:
             batch[key_target + "_target"] = data_target[key_target]
-        if (batch.x is None):
+
+        # If there are no features in the source, set the target features to None
+        if batch.x is None:
             batch["x_target"] = None
-        return batch.contiguous()
+
+        return batch
 
     def to_data(self):
-        data_source = self.__data_class__()
-        data_target = self.__data_class__()
+        """
+        Split Pair object into two Data objects: source and target.
+        """
+        data_source = Data()
+        data_target = Data()
+
+        # Split the Pair object into source and target Data objects
         for key in self.keys:
             match = re.search(r"(.+)_target$", key)
             if match is None:
@@ -63,55 +74,62 @@ class Pair(Data):
             else:
                 new_key = match.groups()[0]
                 data_target[new_key] = self[key]
+
         return data_source, data_target
 
     @property
     def num_nodes_target(self):
-        for key, item in self('x_target', 'pos_target', 'norm_target', 'batch_target'):
-            return item.size(self.__cat_dim__(key, item))
+        """
+        Returns the number of nodes in the target point cloud.
+        """
+        for key, item in self('x_target', 'pos_target', 'batch_target'):
+            if item is not None:
+                return item.size(0)
         return None
 
     def normalise(self, normValue=None):
+        """
+        Normalize the source and target point clouds.
+        """
         if normValue is None:
             min0 = torch.unsqueeze(self.pos.min(0)[0], 0)
             min1 = torch.unsqueeze(self.pos_target.min(0)[0], 0)
             minG = torch.cat((min0, min1), axis=0).min(0)[0]
         else:
             [minG, deltaG] = normValue
-        # normalizing data with the same xmin ymin zmin
-        # Keeping scale of data
-        self.pos[:, 0] = (self.pos[:, 0] - minG[0])  # x
-        self.pos[:, 1] = (self.pos[:, 1] - minG[1])  # y
-        self.pos[:, 2] = (self.pos[:, 2] - minG[2])  # z
 
-        self.pos_target[:, 0] = (self.pos_target[:, 0] - minG[0])  # x
-        self.pos_target[:, 1] = (self.pos_target[:, 1] - minG[1])  # y
-        self.pos_target[:, 2] = (self.pos_target[:, 2] - minG[2])  # z
+        # Normalize position data
+        self.pos[:, 0] -= minG[0]
+        self.pos[:, 1] -= minG[1]
+        self.pos[:, 2] -= minG[2]
 
+        self.pos_target[:, 0] -= minG[0]
+        self.pos_target[:, 1] -= minG[1]
+        self.pos_target[:, 2] -= minG[2]
 
     def data_augment(self, angle=2 * np.pi, paramGaussian=[0.01, 0.05], color_aug=False):
         """
-        Random data augmentation
+        Perform data augmentation on the point cloud.
         """
-        # random rotation around the Z axis
-        angle = (np.random.random()-0.5) * angle
-        M = torch.from_numpy(np.array([[np.cos(angle), -np.sin(angle)], [np.sin(angle), np.cos(angle)]])).type(
-            torch.float32)
-        self.pos[:, :2] = torch.matmul(self.pos[:, :2], M)  # perform the rotation efficiently
+        # Random rotation around the Z axis
+        angle = (np.random.random() - 0.5) * angle
+        M = torch.tensor([[torch.cos(angle), -torch.sin(angle)], [torch.sin(angle), torch.cos(angle)]], dtype=torch.float32)
+
+        # Rotate both source and target point clouds
+        self.pos[:, :2] = torch.matmul(self.pos[:, :2], M)
         self.pos_target[:, :2] = torch.matmul(self.pos_target[:, :2], M)
 
-        # random gaussian noise
+        # Apply random Gaussian noise
         sigma, clip = paramGaussian
-        # Hint: use torch.clip to clip and np.random.randn to generate gaussian noise
-        self.pos = self.pos + torch.clip(torch.randn(self.pos.shape) * sigma, -clip, clip).type(torch.float32)
-        self.pos_target = self.pos_target + torch.clip(torch.randn(self.pos_target.shape) * sigma, -clip, clip).type(
-            torch.float32)
-        # data color augmentation
+        self.pos += torch.clip(torch.randn(self.pos.shape) * sigma, -clip, clip)
+        self.pos_target += torch.clip(torch.randn(self.pos_target.shape) * sigma, -clip, clip)
+
+        # Color augmentation (if applicable)
         if color_aug:
             self._color_jitter()
 
     def _color_jitter(self):
-
+        # Apply random color jittering to the source and target point clouds
         if random.random() < 0.5:
             chromaticJitter = ChromaticJitter()
             self.rgb, self.rgb_target = chromaticJitter(self.rgb, self.rgb_target)
@@ -123,6 +141,7 @@ class Pair(Data):
         if random.random() < 0.5:
             chromaticTranslation = ChromaticTranslation()
             self.rgb, self.rgb_target = chromaticTranslation(self.rgb, self.rgb_target)
+
 
 
 class MultiScalePair(Pair):
