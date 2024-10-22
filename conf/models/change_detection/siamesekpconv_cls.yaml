@@ -60,6 +60,7 @@ SiameseKPConv_cls:
     module_name: KPDualBlock
     mlp:
       nn: [32*in_feat]
+      dropout: 0
       bn_momentum: bn_momentum
 
   mlp1:
