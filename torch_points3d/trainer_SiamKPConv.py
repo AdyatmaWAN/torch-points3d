@@ -1,4 +1,7 @@
 import warnings
+
+from numba.cuda.printimpl import print_item
+
 warnings.filterwarnings("ignore")
 import os
 import copy
@@ -146,6 +149,8 @@ class Trainer:
         self._is_training = True
         cpt_earlyStop = 0
         max_iou_ch = 0
+        print(self._checkpoint.start_epoch)
+        print(self._cfg.training.epochs)
         for epoch in range(self._checkpoint.start_epoch, self._cfg.training.epochs):
             log.info("EPOCH %i / %i", epoch, self._cfg.training.epochs)
 
