@@ -9,7 +9,7 @@ from torch_points3d.trainer_SiamKPConv import Trainer
 def main(cfg):
     OmegaConf.set_struct(cfg, False)  # This allows getattr and hasattr methods to function correctly
     if "deterministic_seed" not in cfg:
-        cfg.deterministic_seed = None
+        cfg.visualization.deterministic_seed = None
     if cfg.pretty_print:
         print(OmegaConf.to_yaml(cfg))
     trainer = Trainer(cfg)
