@@ -1,5 +1,6 @@
 import hydra
 from hydra.core.global_hydra import GlobalHydra
+from numba.cuda.printimpl import print_item
 from omegaconf import OmegaConf
 from torch_points3d.trainer_SiamKPConv import Trainer
 
@@ -13,7 +14,9 @@ def main(cfg):
     if cfg.pretty_print:
         print(OmegaConf.to_yaml(cfg))
     trainer = Trainer(cfg)
+    print("Start training ...")
     trainer.train()
+    print("End of training ...")
     # trainer.eval()
     # https://github.com/facebookresearch/hydra/issues/440
     GlobalHydra.get_state().clear()

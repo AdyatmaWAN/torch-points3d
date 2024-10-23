@@ -142,6 +142,7 @@ class Trainer:
         np.random.seed()
 
     def train(self):
+        print("Training")
         self._is_training = True
         cpt_earlyStop = 0
         max_iou_ch = 0
